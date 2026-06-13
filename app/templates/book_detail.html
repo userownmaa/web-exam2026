@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}{{ book.title }} - Электронная библиотека{% endblock %}
+
+{% block content %}
+<!-- Добавляем кнопку "Назад" -->
+<div class="row mb-3">
+    <div class="col-12">
+        <a href="{{ url_for('main.index') }}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Назад к списку книг
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        {% if book.cover %}
+        <img src="{{ url_for('static', filename='uploads/' + book.cover.filename) }}" 
+             class="book-detail-cover img-fluid" alt="{{ book.title }}">
+        {% else %}
+        <img src="https://via.placeholder.com/400x500/1a1a1a/ffffff?text=No+Cover" 
+             class="book-detail-cover img-fluid" alt="No cover">
+        {% endif %}
+    </div>
+    
+    <div class="col-md-8">
+        <div class="book-info">
+            <h1>{{ book.title }}</h1>
+            <hr>
+            <p><strong>Автор:</strong> {{ book.author }}</p>
+            <p><strong>Год издания:</strong> {{ book.year }}</p>
+            <p><strong>Издательство:</strong> {{ book.publisher }}</p>
+            <p><strong>Объём:</strong> {{ book.pages }} стр.</p>
+            <p><strong>Жанры:</strong> 
+                {% for genre in book.genres %}
+                    <span class="badge bg-secondary">{{ genre.name }}</span>
+                {% endfor %}
+            </p>
+            <p><strong>Рейтинг:</strong> 
+                <span class="text-warning">
+                    {{ "★" * (book.average_rating|int) }}{{ "☆" * (5 - book.average_rating|int) }}
+                </span>
+                ({{ book.reviews_count }} {{ 'рецензия' if book.reviews_count == 1 else 'рецензий' }})
+            </p>
+        </div>
+        
+        <div class="book-description">
+            <h3>Описание</h3>
+            <div>{{ book.description_html|safe }}</div>
+        </div>
+    </div>
+</div>
+
+<!-- Reviews Section -->
+<div class="row mt-4">
+    <div class="col-12">
+        <h3><i class="fas fa-comments"></i> Рецензии</h3>
+        
+        {% if current_user.is_authenticated and not user_review %}
+            <div class="mb-4">
+                <a href="{{ url_for('reviews.add_review', book_id=book.id) }}" class="btn btn-primary">
+                    <i class="fas fa-pen"></i> Написать рецензию
+                </a>
+            </div>
+        {% endif %}
+        
+        {% if book.reviews %}
+            {% for review in book.reviews|sort(attribute='created_at', reverse=true) %}
+            <div class="review-card">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <strong>{{ review.user.full_name }}</strong>
+                    <span class="review-rating">
+                        {{ "★" * review.rating }}{{ "☆" * (5 - review.rating) }}
+                    </span>
+                </div>
+                <!-- <small class="text-muted">{{ review.created_at.strftime('%d.%m.%Y %H:%M') }}</small> -->
+                <p class="mt-2">{{ review.text|safe }}</p>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="alert alert-info">Пока нет рецензий на эту книгу. Будьте первым!</div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
