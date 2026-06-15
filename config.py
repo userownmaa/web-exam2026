@@ -48,18 +48,13 @@ class Config:
     
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     
-    # Upload settings — используем Railway Volume, если он есть
+    # Upload settings - используем папку внутри Volume, но с подпапкой
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     
-    # Проверяем, есть ли переменная от Railway Volume
-    if os.environ.get('RAILWAY_VOLUME_MOUNT_PATH'):
-        # Используем путь из Railway Volume
-        UPLOAD_FOLDER = os.path.join(os.environ['RAILWAY_VOLUME_MOUNT_PATH'])
-    else:
-        # Локальная разработка
-        UPLOAD_FOLDER = os.path.join(BASE_DIR, 'app', 'static', 'uploads')
+    # Создаём папку для обложек в корне проекта (не в static)
+    UPLOAD_FOLDER = os.path.join(BASE_DIR, 'covers')
     
-    MAX_CONTENT_LENGTH = 16 * 1024 * 1024  # 16MB
+    MAX_CONTENT_LENGTH = 16 * 1024 * 1024
     ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
     
     BOOKS_PER_PAGE = 6

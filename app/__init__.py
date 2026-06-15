@@ -59,11 +59,15 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
     
-    # Создаём папку для загрузок, если её нет
+    # Создаём папку для загрузок
     upload_folder = app.config['UPLOAD_FOLDER']
     os.makedirs(upload_folder, exist_ok=True)
     print(f"Upload folder: {upload_folder}")
     print(f"Upload folder exists: {os.path.exists(upload_folder)}")
+    
+    # Также создаём папку в static для обратной совместимости
+    static_uploads = os.path.join(app.root_path, 'static', 'uploads')
+    os.makedirs(static_uploads, exist_ok=True)
     
     db.init_app(app)
     login_manager.init_app(app)
@@ -80,6 +84,12 @@ def create_app():
     def load_user(user_id):
         from app.models import User
         return User.query.get(int(user_id))
+    
+    # Настройка для раздачи файлов из папки covers
+    @app.route('/covers/<path:filename>')
+    def serve_cover(filename):
+        from flask import send_from_directory
+        return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
     
     from app.blueprints.auth import auth_bp
     from app.blueprints.books import books_bp

@@ -13,15 +13,7 @@
 
 <div class="row">
     <div class="col-md-4">
-        <!-- {% if book.cover %}
-        <img src="{{ url_for('static', filename='uploads/' + book.cover.filename) }}" 
-             class="book-detail-cover img-fluid" alt="{{ book.title }}">
-        {% else %}
-        <img src="https://via.placeholder.com/400x500/1a1a1a/ffffff?text=No+Cover" 
-             class="book-detail-cover img-fluid" alt="No cover">
-        {% endif %} -->
-
-        <div class="book-cover-wrapper">
+        <!-- <div class="book-cover-wrapper">
             {% if book.cover %}
                 <img src="{{ url_for('static', filename='uploads/' + book.cover.filename) }}" 
                      class="book-detail-cover" alt="{{ book.title }}">
@@ -29,7 +21,18 @@
                 <img src="https://via.placeholder.com/350x450/1a1a1a/ffffff?text=No+Cover" 
                      class="book-detail-cover" alt="No cover">
             {% endif %}
+        </div> -->
+
+        <div class="book-cover-wrapper">
+            {% if book.cover %}
+                <img src="{{ url_for('serve_cover', filename=book.cover.filename) }}" 
+                     class="book-detail-cover" alt="{{ book.title }}">
+            {% else %}
+                <img src="https://via.placeholder.com/350x450/1a1a1a/ffffff?text=No+Cover" 
+                     class="book-detail-cover" alt="No cover">
+            {% endif %}
         </div>
+        
     </div>
 
     

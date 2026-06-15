@@ -6,7 +6,6 @@
 {% block content %}
 <div class="row">
     <div class="col-12">
-        <!-- Заголовок с кнопкой добавления на одной линии -->
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h1 class="mb-0"><i class="fas fa-book-open"></i> Каталог книг</h1>
             {% if current_user.is_authenticated and current_user.role.name == 'admin' %}
@@ -16,7 +15,6 @@
             {% endif %}
         </div>
         
-        <!-- Search Section -->
         <div class="search-section">
             <h4><i class="fas fa-search"></i> Поиск книг</h4>
             <form method="GET" action="{{ url_for('main.index') }}" id="searchForm">
@@ -90,13 +88,21 @@
             {% for book in books %}
             <div class="col-md-6 col-lg-4 mb-4">
                 <div class="card book-card">
-                    {% if book.cover %}
+                    <!-- {% if book.cover %}
                     <img src="{{ url_for('static', filename='uploads/' + book.cover.filename) }}" 
                          class="card-img-top book-cover" alt="{{ book.title }}">
                     {% else %}
                     <img src="https://via.placeholder.com/300x250/1a1a1a/ffffff?text=No+Cover" 
                          class="card-img-top book-cover" alt="No cover">
+                    {% endif %} -->
+                    {% if book.cover %}
+                        <img src="{{ url_for('serve_cover', filename=book.cover.filename) }}" 
+                            class="card-img-top book-cover" alt="{{ book.title }}">
+                    {% else %}
+                        <img src="https://via.placeholder.com/300x250/1a1a1a/ffffff?text=No+Cover" 
+                            class="card-img-top book-cover" alt="No cover">
                     {% endif %}
+
                     <div class="card-body">
                         <h5 class="card-title">{{ book.title }}</h5>
                         <p class="card-text">
