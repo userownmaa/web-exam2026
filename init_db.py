@@ -5,13 +5,10 @@ from werkzeug.security import generate_password_hash
 app = create_app()
 
 with app.app_context():
-    # Drop all tables
     db.drop_all()
     
-    # Create all tables
     db.create_all()
     
-    # Create roles
     roles = [
         Role(name='admin', description='Полный доступ к системе'),
         Role(name='moderator', description='Может редактировать книги и модерировать рецензии'),
@@ -23,7 +20,6 @@ with app.app_context():
     
     db.session.commit()
     
-    # Create admin user
     admin = User(
         login='admin',
         password_hash=generate_password_hash('admin123'),
@@ -35,7 +31,6 @@ with app.app_context():
     
     db.session.add(admin)
     
-    # Create moderator user
     moderator = User(
         login='moderator',
         password_hash=generate_password_hash('moder123'),
@@ -47,7 +42,6 @@ with app.app_context():
     
     db.session.add(moderator)
     
-    # Create regular user
     user = User(
         login='user',
         password_hash=generate_password_hash('user123'),
@@ -59,7 +53,6 @@ with app.app_context():
     
     db.session.add(user)
     
-    # Create some genres
     genres = [
         Genre(name='Фантастика'),
         Genre(name='Детектив'),

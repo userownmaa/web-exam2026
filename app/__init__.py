@@ -13,13 +13,11 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
     
-    # Ensure upload directory exists
     os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
     
     db.init_app(app)
     login_manager.init_app(app)
     
-    # Добавляем функцию в контекст Jinja2
     @app.context_processor
     def utility_processor():
         def get_args_without_page(args):
@@ -35,7 +33,6 @@ def create_app():
         from app.models import User
         return User.query.get(int(user_id))
     
-    # Register blueprints
     from app.blueprints.auth import auth_bp
     from app.blueprints.books import books_bp
     from app.blueprints.reviews import reviews_bp

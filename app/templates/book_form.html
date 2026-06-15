@@ -11,7 +11,6 @@
                 <h3>{{ title }}</h3>
             </div>
             <div class="card-body">
-                <!-- Добавлен атрибут novalidate -->
                 <form method="POST" enctype="multipart/form-data" id="bookForm" novalidate>
                     {{ form.hidden_tag() }}
                     
@@ -83,7 +82,7 @@
 
 {% block scripts %}
 <script>
-    // Initialize EasyMDE for markdown editing
+    //  EasyMDE 
     var easyMDE = new EasyMDE({
         element: document.getElementById('description'),
         toolbar: ['bold', 'italic', 'heading', '|', 'quote', 'unordered-list', 'ordered-list', '|', 'link', 'image', '|', 'preview', 'side-by-side', 'fullscreen', '|', 'guide'],

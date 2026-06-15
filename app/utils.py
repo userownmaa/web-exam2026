@@ -13,59 +13,24 @@ def allowed_file(filename):
 def compute_md5(file_data):
     return hashlib.md5(file_data).hexdigest()
 
-# def save_cover(file, book_id, db, Cover):
-#     file_data = file.read()
-#     md5_hash = compute_md5(file_data)
-    
-#     # Check if image with same hash exists
-#     existing_cover = Cover.query.filter_by(md5_hash=md5_hash).first()
-#     if existing_cover:
-#         existing_cover.book_id = book_id
-#         db.session.commit()
-#         return existing_cover
-    
-#     # Secure filename and save
-#     original_filename = secure_filename(file.filename)
-#     extension = original_filename.rsplit('.', 1)[1].lower()
-#     new_filename = f"{book_id}_{md5_hash[:8]}.{extension}"
-#     filepath = os.path.join(current_app.config['UPLOAD_FOLDER'], new_filename)
-    
-#     # Optimize image
-#     img = Image.open(file)
-#     img.thumbnail((500, 700), Image.Resampling.LANCZOS)
-#     img.save(filepath, optimize=True)
-    
-#     cover = Cover(
-#         filename=new_filename,
-#         mime_type=file.mimetype,
-#         md5_hash=md5_hash,
-#         book_id=book_id
-#     )
-#     db.session.add(cover)
-#     return cover
-
 def save_cover(file, book_id, db, Cover):
     try:
         file_data = file.read()
         md5_hash = compute_md5(file_data)
         
-        # Check if image with same hash exists
         existing_cover = Cover.query.filter_by(md5_hash=md5_hash).first()
         if existing_cover:
             existing_cover.book_id = book_id
             db.session.commit()
             return existing_cover
         
-        # Secure filename and save
         original_filename = secure_filename(file.filename)
         extension = original_filename.rsplit('.', 1)[1].lower()
         new_filename = f"{book_id}_{md5_hash[:8]}.{extension}"
         filepath = os.path.join(current_app.config['UPLOAD_FOLDER'], new_filename)
         
-        # Ensure directory exists
         os.makedirs(os.path.dirname(filepath), exist_ok=True)
         
-        # Optimize image
         img = Image.open(file)
         img.thumbnail((500, 700), Image.Resampling.LANCZOS)
         img.save(filepath, optimize=True)

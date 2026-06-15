@@ -1,4 +1,3 @@
-/* Dark Theme with Better Text Contrast */
 :root {
     --bg-primary: #0a0a0a;
     --bg-secondary: #1a1a1a;
@@ -30,14 +29,12 @@ main {
     flex: 1;
 }
 
-/* Headers - ensure white color */
 h1, h2, h3, h4, h5, h6,
 .card-header h3,
 .modal-header h5 {
     color: var(--text-primary) !important;
 }
 
-/* Navbar */
 .navbar {
     background-color: var(--bg-secondary) !important;
     border-bottom: 1px solid var(--border-color);
@@ -52,7 +49,7 @@ h1, h2, h3, h4, h5, h6,
     color: var(--accent-primary) !important;
 }
 
-/* Cards */
+/* карточки книг */
 .card {
     background-color: var(--bg-secondary);
     border: 1px solid var(--border-color);
@@ -84,7 +81,6 @@ h1, h2, h3, h4, h5, h6,
     line-height: 1.5;
 }
 
-/* Forms - lighter text and dark backgrounds */
 .form-control, .form-select {
     background-color: var(--bg-tertiary);
     border: 1px solid var(--border-color);
@@ -107,13 +103,12 @@ h1, h2, h3, h4, h5, h6,
     color: var(--text-muted);
 }
 
-/* Textarea specific */
 textarea.form-control {
     background-color: var(--bg-tertiary);
     color: var(--text-primary);
 }
 
-/* EasyMDE editor customization */
+/* EasyMDE редактор */
 .EasyMDEContainer .CodeMirror {
     background-color: var(--bg-tertiary);
     border-color: var(--border-color);
@@ -138,7 +133,6 @@ textarea.form-control {
     border-left-color: var(--text-primary);
 }
 
-/* Help text */
 .form-text, .text-muted {
     color: var(--text-muted) !important;
 }
@@ -148,7 +142,7 @@ small.text-muted {
     font-size: 0.875em;
 }
 
-/* Buttons */
+/* кнопки */
 .btn {
     font-weight: 500;
 }
@@ -184,7 +178,7 @@ small.text-muted {
     color: white;
 }
 
-/* Стили для кнопок действий на карточках книг */
+/* кнопки действий на карточках книг */
 .book-actions .btn {
     color: white !important;
     font-weight: 500;
@@ -225,7 +219,6 @@ small.text-muted {
     font-size: 0.875rem;
 }
 
-/* Для всех кнопок в целом */
 .btn {
     color: white;
 }
@@ -245,7 +238,6 @@ small.text-muted {
     color: white;
 }
 
-/* Alerts */
 .alert {
     border-radius: 10px;
     border: none;
@@ -271,7 +263,7 @@ small.text-muted {
     color: white;
 }
 
-/* Pagination */
+/* пагинация */
 .pagination .page-link {
     background-color: var(--bg-secondary);
     border-color: var(--border-color);
@@ -288,7 +280,7 @@ small.text-muted {
     border-color: var(--accent-primary);
 }
 
-/* Book cards grid */
+/* карточки книг */
 .book-card {
     height: 100%;
     display: flex;
@@ -308,7 +300,6 @@ small.text-muted {
     justify-content: flex-end;
 }
 
-/* Search section */
 .search-section {
     background-color: var(--bg-secondary);
     border-radius: 12px;
@@ -323,7 +314,7 @@ small.text-muted {
     margin-bottom: 5px;
 }
 
-/* Reviews */
+/* рецензии */
 .review-card {
     background-color: var(--bg-tertiary);
     border-left: 4px solid var(--accent-primary);
@@ -341,7 +332,7 @@ small.text-muted {
     font-size: 1.2em;
 }
 
-/* Modal */
+/* модалки */
 .modal-content {
     background-color: var(--bg-secondary);
     border: 1px solid var(--border-color);
@@ -363,7 +354,7 @@ small.text-muted {
     filter: invert(1);
 }
 
-/* Footer */
+/* футер */
 .footer {
     background-color: var(--bg-secondary);
     border-top: 1px solid var(--border-color);
@@ -378,13 +369,33 @@ small.text-muted {
     margin-bottom: 5px;
 }
 
-/* Book detail page */
+/* просмотр книги */
+
 .book-detail-cover {
     max-width: 100%;
+    height: auto;
+    max-height: 500px;
+    width: auto;
     border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    object-fit: contain;
 }
 
+/*  контейнер для обложки */
+.book-cover-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.book-cover-container img {
+    max-width: 100%;
+    height: auto;
+    max-height: 450px;
+    width: auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    object-fit: cover;
+}
 .book-info {
     background-color: var(--bg-tertiary);
     padding: 20px;
@@ -419,13 +430,11 @@ small.text-muted {
     color: var(--text-secondary);
 }
 
-/* Badges */
 .badge {
     font-weight: 500;
     padding: 5px 10px;
 }
 
-/* Links */
 a {
     color: var(--accent-primary);
     text-decoration: none;
@@ -436,7 +445,6 @@ a:hover {
     text-decoration: underline;
 }
 
-/* File input */
 input[type="file"] {
     background-color: var(--bg-tertiary);
     color: var(--text-primary);
@@ -458,7 +466,7 @@ input[type="file"]::file-selector-button:hover {
     background-color: #0b5ed7;
 }
 
-/* Убираем ползунки у number input */
+/*  ползунки у number input */
 input[type="number"] {
     -moz-appearance: textfield;
     appearance: textfield;
@@ -470,7 +478,7 @@ input[type="number"]::-webkit-outer-spin-button {
     margin: 0;
 }
 
-/* Улучшаем стили для select multiple */
+/*  стили для select multiple */
 select[multiple] {
     background-color: var(--bg-tertiary);
     color: var(--text-primary);
@@ -494,13 +502,11 @@ select[multiple] option:checked {
     color: white;
 }
 
-/* Placeholder стили */
 input::placeholder {
     color: var(--text-muted);
     opacity: 0.7;
 }
 
-/* Улучшаем отступы в поисковой секции */
 .search-section .row {
     margin-bottom: 10px;
 }
@@ -510,7 +516,6 @@ input::placeholder {
     font-weight: 500;
 }
 
-/* Стили для подсказок */
 .text-muted {
     font-size: 0.75rem;
     margin-top: 5px;

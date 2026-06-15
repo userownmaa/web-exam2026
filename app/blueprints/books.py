@@ -8,17 +8,6 @@ import os
 
 books_bp = Blueprint('books', __name__)
 
-# def check_admin():
-#     if not current_user.is_authenticated or current_user.role.name not in ['admin', 'moderator']:
-#         flash('У вас недостаточно прав для выполнения данного действия', 'danger')
-#         return False
-#     return True
-
-# def check_admin_only():
-#     if not current_user.is_authenticated or current_user.role.name != 'admin':
-#         flash('У вас недостаточно прав для выполнения данного действия', 'danger')
-#         return False
-#     return True
 
 def check_admin():
     # Проверяем, что пользователь авторизован и имеет роль admin ИЛИ moderator
@@ -31,7 +20,6 @@ def check_admin():
     return True
 
 def check_admin_only():
-    # Только для администратора (удаление, добавление)
     if not current_user.is_authenticated:
         flash('Для выполнения данного действия необходимо пройти процедуру аутентификации', 'danger')
         return False
@@ -44,9 +32,6 @@ def check_admin_only():
 @books_bp.route('/add', methods=['GET', 'POST'])
 @login_required
 def add_book():
-    # if not check_admin():
-    #     return redirect(url_for('main.index'))
-
     if current_user.role.name != 'admin':
         flash('У вас недостаточно прав для выполнения данного действия', 'danger')
         return redirect(url_for('main.index'))
@@ -56,7 +41,7 @@ def add_book():
     
     if form.validate_on_submit():
         try:
-            print("Form validated successfully")  # Debug
+            print("Form validated successfully") 
             print(f"Title: {form.title.data}")
             print(f"Author: {form.author.data}")
             print(f"Year: {form.year.data}")
@@ -73,9 +58,8 @@ def add_book():
                 pages=form.pages.data
             )
             db.session.add(book)
-            db.session.flush()  # Get book ID
+            db.session.flush() 
             
-            # Add genres
             for genre_id in form.genres.data:
                 genre = Genre.query.get(genre_id)
                 if genre:
@@ -84,7 +68,6 @@ def add_book():
             db.session.commit()
             print(f"Book saved with ID: {book.id}")
             
-            # Save cover if provided
             if form.cover.data:
                 print("Saving cover...")
                 save_cover(form.cover.data, book.id, db, Cover)
@@ -95,14 +78,14 @@ def add_book():
             return redirect(url_for('books.view_book', book_id=book.id))
         except Exception as e:
             db.session.rollback()
-            print(f"Error: {e}")  # Debug
+            print(f"Error: {e}")  
             import traceback
-            traceback.print_exc()  # Print full error
+            traceback.print_exc()
             flash('При сохранении данных возникла ошибка. Проверьте корректность введённых данных.', 'danger')
     
     else:
         print("Form validation failed")
-        print(form.errors)  # Debug - see validation errors
+        print(form.errors)  
     
     return render_template('book_form.html', form=form, title='Добавление книги', is_edit=False)
 
@@ -126,7 +109,6 @@ def edit_book(book_id):
             book.author = form.author.data
             book.pages = form.pages.data
             
-            # Update genres
             book.genres = []
             for genre_id in form.genres.data:
                 genre = Genre.query.get(genre_id)

@@ -9,18 +9,6 @@ class LoginForm(FlaskForm):
     password = PasswordField('Пароль', validators=[DataRequired()])
     remember_me = BooleanField('Запомнить меня')
 
-# class BookForm(FlaskForm):
-#     title = StringField('Название', validators=[DataRequired(), Length(max=200)])
-#     description = TextAreaField('Описание', validators=[DataRequired()])
-#     year = IntegerField('Год', validators=[DataRequired(), NumberRange(min=0, max=2026)])
-#     publisher = StringField('Издательство', validators=[DataRequired(), Length(max=200)])
-#     author = StringField('Автор', validators=[DataRequired(), Length(max=200)])
-#     pages = IntegerField('Объём (страницы)', validators=[DataRequired(), NumberRange(min=1)])
-#     genres = SelectMultipleField('Жанры', coerce=int, validators=[DataRequired()])
-#     cover = FileField('Обложка', validators=[
-#         FileAllowed(Config.ALLOWED_EXTENSIONS, 'Только изображения!')
-#     ])
-
 class BookForm(FlaskForm):
     title = StringField('Название', validators=[DataRequired(), Length(max=200)])
     description = TextAreaField('Описание', validators=[DataRequired()])

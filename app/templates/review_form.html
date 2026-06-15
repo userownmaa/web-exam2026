@@ -32,7 +32,6 @@
                                 <div class="text-danger small">{{ error }}</div>
                             {% endfor %}
                         {% endif %}
-                        <!-- <small class="text-muted">Поддерживается Markdown разметка</small> -->
                     </div>
                     
                     <div class="mt-3">
@@ -52,7 +51,7 @@
 
 {% block scripts %}
 <script>
-    // Инициализация EasyMDE
+    //  EasyMDE
     var easyMDE = new EasyMDE({
         element: document.getElementById('text'),
         toolbar: ['bold', 'italic', 'heading', '|', 'quote', 'unordered-list', 'ordered-list', '|', 'link', 'preview', 'side-by-side', 'fullscreen', '|', 'guide'],
