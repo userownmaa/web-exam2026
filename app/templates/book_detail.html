@@ -24,7 +24,7 @@
         </div> -->
 
         <div class="book-cover-wrapper">
-            {% if book.cover %}
+            {% if book.cover and book.cover.filename %}
                 <img src="{{ url_for('serve_cover', filename=book.cover.filename) }}" 
                      class="book-detail-cover" alt="{{ book.title }}">
             {% else %}
@@ -32,7 +32,7 @@
                      class="book-detail-cover" alt="No cover">
             {% endif %}
         </div>
-        
+
     </div>
 
     

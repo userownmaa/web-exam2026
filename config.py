@@ -26,6 +26,7 @@
 #     ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
 #     BOOKS_PER_PAGE = 6
 
+
 import os
 from dotenv import load_dotenv
 
@@ -48,11 +49,14 @@ class Config:
     
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     
-    # Upload settings - используем папку внутри Volume, но с подпапкой
+    # Upload settings - используем отдельную папку для Volume
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     
-    # Создаём папку для обложек в корне проекта (не в static)
-    UPLOAD_FOLDER = os.path.join(BASE_DIR, 'covers')
+    # Если есть Volume от Railway, используем его
+    if os.environ.get('RAILWAY_VOLUME_MOUNT_PATH'):
+        UPLOAD_FOLDER = os.environ.get('RAILWAY_VOLUME_MOUNT_PATH')
+    else:
+        UPLOAD_FOLDER = os.path.join(BASE_DIR, 'covers')
     
     MAX_CONTENT_LENGTH = 16 * 1024 * 1024
     ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp'}

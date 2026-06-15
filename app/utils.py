@@ -155,6 +155,72 @@ def compute_md5(file_data):
 #     finally:
 #         print("=== SAVING COVER END ===")
 
+# def save_cover(file, book_id, db, Cover):
+#     """Сохраняет обложку в файловую систему и создаёт запись в БД"""
+#     try:
+#         print(f"=== SAVING COVER START ===")
+#         print(f"Book ID: {book_id}")
+        
+#         if not file or not file.filename:
+#             print("No file provided")
+#             return None
+        
+#         file_data = file.read()
+#         print(f"File size: {len(file_data)} bytes")
+        
+#         md5_hash = compute_md5(file_data)
+#         print(f"MD5 hash: {md5_hash}")
+        
+#         # Check if image with same hash exists
+#         existing_cover = Cover.query.filter_by(md5_hash=md5_hash).first()
+#         if existing_cover:
+#             print(f"Cover already exists with ID: {existing_cover.id}")
+#             existing_cover.book_id = book_id
+#             db.session.commit()
+#             return existing_cover
+        
+#         # Secure filename
+#         original_filename = secure_filename(file.filename)
+#         extension = original_filename.rsplit('.', 1)[1].lower()
+#         new_filename = f"{book_id}_{md5_hash[:8]}.{extension}"
+        
+#         # Get upload folder path
+#         upload_folder = current_app.config['UPLOAD_FOLDER']
+#         print(f"Upload folder: {upload_folder}")
+        
+#         # Ensure directory exists
+#         os.makedirs(upload_folder, exist_ok=True)
+        
+#         filepath = os.path.join(upload_folder, new_filename)
+#         print(f"File will be saved to: {filepath}")
+        
+#         # Optimize image
+#         img = Image.open(file)
+#         print(f"Original image size: {img.size}")
+#         img.thumbnail((500, 700), Image.Resampling.LANCZOS)
+#         img.save(filepath, optimize=True, quality=85)
+#         print(f"Image saved successfully")
+        
+#         # Create cover record - сохраняем путь относительно корня
+#         cover = Cover(
+#             filename=new_filename,
+#             mime_type=file.mimetype,
+#             md5_hash=md5_hash,
+#             book_id=book_id
+#         )
+#         db.session.add(cover)
+#         db.session.commit()
+        
+#         print("=== SAVING COVER SUCCESS ===")
+#         return cover
+        
+#     except Exception as e:
+#         print(f"Error saving cover: {e}")
+#         import traceback
+#         traceback.print_exc()
+#         db.session.rollback()
+#         raise e
+
 def save_cover(file, book_id, db, Cover):
     """Сохраняет обложку в файловую систему и создаёт запись в БД"""
     try:
@@ -184,7 +250,7 @@ def save_cover(file, book_id, db, Cover):
         extension = original_filename.rsplit('.', 1)[1].lower()
         new_filename = f"{book_id}_{md5_hash[:8]}.{extension}"
         
-        # Get upload folder path
+        # Get upload folder path from config
         upload_folder = current_app.config['UPLOAD_FOLDER']
         print(f"Upload folder: {upload_folder}")
         
@@ -194,16 +260,16 @@ def save_cover(file, book_id, db, Cover):
         filepath = os.path.join(upload_folder, new_filename)
         print(f"File will be saved to: {filepath}")
         
-        # Optimize image
+        # Reset file pointer and save image
         img = Image.open(file)
         print(f"Original image size: {img.size}")
         img.thumbnail((500, 700), Image.Resampling.LANCZOS)
         img.save(filepath, optimize=True, quality=85)
         print(f"Image saved successfully")
         
-        # Create cover record - сохраняем путь относительно корня
+        # Create cover record
         cover = Cover(
-            filename=new_filename,
+            filename=new_filename,  # Сохраняем только имя файла
             mime_type=file.mimetype,
             md5_hash=md5_hash,
             book_id=book_id

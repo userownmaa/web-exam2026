@@ -95,7 +95,7 @@
                     <img src="https://via.placeholder.com/300x250/1a1a1a/ffffff?text=No+Cover" 
                          class="card-img-top book-cover" alt="No cover">
                     {% endif %} -->
-                    {% if book.cover %}
+                    {% if book.cover and book.cover.filename %}
                         <img src="{{ url_for('serve_cover', filename=book.cover.filename) }}" 
                             class="card-img-top book-cover" alt="{{ book.title }}">
                     {% else %}
